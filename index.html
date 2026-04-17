@@ -939,7 +939,12 @@ src="https://www.facebook.com/tr?id=478303434960188&ev=PageView&noscript=1"
     </div>
   </footer>
 
-  <a class="whatsapp-float" href="https://wa.me/5513997851714?text=Olá%2C%20quero%20estruturar%20melhor%20meu%20atendimento" onclick="fbq('track','Lead')" target="_blank" rel="noopener noreferrer" aria-label="Falar no WhatsApp">✆</a>
+  <a class="whatsapp-float"
+   href="#"
+   onclick="trackWhatsAppLead(); return false;"
+   target="_blank"
+   rel="noopener noreferrer"
+   aria-label="Falar no WhatsApp">✆</a>
 
   <script>
     const menuToggle = document.querySelector('.menu-toggle');
@@ -1042,6 +1047,35 @@ src="https://www.facebook.com/tr?id=478303434960188&ev=PageView&noscript=1"
       document.getElementById('modalPrivacidade').style.display = 'none';
     }
   </script>
+<script>
+function gerarEventId() {
+  return 'evt_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10);
+}
 
+function trackWhatsAppLead() {
+  const eventId = gerarEventId();
+
+  fbq('track', 'Lead', {}, { eventID: eventId });
+
+  fetch('/.netlify/functions/meta-lead', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      event_id: eventId,
+      event_name: 'Lead',
+      event_source_url: window.location.href
+    })
+  });
+
+  setTimeout(() => {
+    window.open(
+      'https://wa.me/5513997851714?text=Ol%C3%A1%2C%20quero%20estruturar%20melhor%20meu%20atendimento',
+      '_blank'
+    );
+  }, 300);
+}
+</script>
 </body>
 </html>
