@@ -1057,7 +1057,7 @@ function trackWhatsAppLead() {
 
   fbq('track', 'Lead', {}, { eventID: eventId });
 
-fetch('/.netlify/functions/meta-lead', {
+fetch('/api/meta-lead', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
