@@ -1057,24 +1057,25 @@ function trackWhatsAppLead() {
 
   fbq('track', 'Lead', {}, { eventID: eventId });
 
-  fetch('/.netlify/functions/meta-lead', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      event_id: eventId,
-      event_name: 'Lead',
-      event_source_url: window.location.href
-    })
-  });
-
+fetch('/.netlify/functions/meta-lead', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    event_id: eventId,
+    event_name: 'Lead',
+    event_source_url: window.location.href
+  })
+})
+.finally(() => {
   setTimeout(() => {
     window.open(
       'https://wa.me/5513997851714?text=Ol%C3%A1%2C%20quero%20estruturar%20melhor%20meu%20atendimento',
       '_blank'
     );
   }, 300);
+});
 }
 </script>
 </body>
