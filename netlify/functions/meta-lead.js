@@ -5,6 +5,9 @@ exports.handler = async (event) => {
     const pixelId = "478303434960188";
     const accessToken = process.env.META_ACCESS_TOKEN;
 
+    const forwardedFor = event.headers["x-forwarded-for"] || "";
+    const clientIp = forwardedFor.split(",")[0].trim();
+
     const payload = {
       data: [
         {
@@ -15,7 +18,7 @@ exports.handler = async (event) => {
           event_source_url: body.event_source_url,
           user_data: {
             client_user_agent: event.headers["user-agent"] || "",
-            client_ip_address: event.headers["x-forwarded-for"] || ""
+            client_ip_address: clientIp
           }
         }
       ]
@@ -33,7 +36,7 @@ exports.handler = async (event) => {
     const data = await response.json();
 
     return {
-      statusCode: 200,
+      statusCode: response.status,
       body: JSON.stringify(data)
     };
   } catch (error) {
