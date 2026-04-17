@@ -22,6 +22,7 @@ exports.handler = async (event) => {
           }
         }
       ]
+test_event_code: "TEST21702"
     };
 
     const response = await fetch(
